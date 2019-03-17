@@ -1,0 +1,1 @@
+CREATE DATABASE albumstore IF NOT EXISTS;
