@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @Component
 public class SpotifyService {
+
     @Value("spotify.clientId")
     private static String clientId;
 
