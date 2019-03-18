@@ -11,12 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class AlbumstoreApplicationTests {
 
-	@Autowired
-	private SpotifyService spotifyService;
-
-	@Test
-	public void contextLoads() {
-
-	}
-
+  @Test
+  public void main() {
+    AlbumstoreApplication.main(new String[] {"--spring.config.location=classpath:application-test.yml"});
+  }
 }

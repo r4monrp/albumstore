@@ -7,8 +7,8 @@ app:
   url: https://www.linkedin.com/in/ramon-pereira-94a04b107/
   email: ramon.alves@live.com
 spotify:
-  clientId: ${ALBUMSTORE_SPOTIFY_CLIENT_ID:default}
-  clientSecret: ${ALBUMSTORE_SPOTIFY_CLIENT_SECRET:default}
+  clientId: ${ALBUMSTORE_SPOTIFY_CLIENT_ID}
+  clientSecret: ${ALBUMSTORE_SPOTIFY_CLIENT_SECRET}
 spring:
   datasource:
     url: ${ALBUMSTORE_DATASOURCE_URL}
@@ -18,3 +18,13 @@ spring:
     hibernate.ddl-auto: none
     show-sql: false
     properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+  flyway:
+    check-location: true
+    enabled: true
+    url: ${ALBUMSTORE_DATASOURCE_URL}
+    username: ${ALBUMSTORE_DATASOURCE_USERNAME}
+    password: ${ALBUMSTORE_DATASOURCE_PASSWORD}
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      fail-on-empty-beans: false

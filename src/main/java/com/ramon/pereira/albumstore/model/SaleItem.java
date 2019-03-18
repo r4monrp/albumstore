@@ -56,5 +56,5 @@ public class SaleItem implements Serializable {
     @JsonBackReference
     @PrimaryKeyJoinColumn
     @ManyToOne(fetch = FetchType.LAZY)
-    private Sale sale;
+    private Sale sales;
 }

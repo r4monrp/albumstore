@@ -20,6 +20,7 @@
 		<springfox-swagger.version>2.8.0</springfox-swagger.version>
 		<jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
 		<spotify-web-api-java.version>2.1.2</spotify-web-api-java.version>
+		<java-faker.version>0.15</java-faker.version>
 	</properties>
 
 	<dependencies>
@@ -43,6 +44,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
 		</dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -73,6 +78,11 @@
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${springfox-swagger.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>${java-faker.version}</version>
 		</dependency>
 	</dependencies>
 
