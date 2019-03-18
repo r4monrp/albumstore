@@ -4,7 +4,9 @@ import com.ramon.pereira.albumstore.business.DiscCatalogBusiness;
 import com.ramon.pereira.albumstore.model.Disc;
 import com.ramon.pereira.albumstore.model.enDiscGenre;
 import com.ramon.pereira.albumstore.repository.DiscCatalogRepository;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,12 +19,13 @@ public class DiscCatalogBusinessImpl implements DiscCatalogBusiness {
     private DiscCatalogRepository discCatalogRepository;
 
     @Override
-    public Optional<List<Disc>> filterByGenre(enDiscGenre genre) {
-        return Optional.of(this.discCatalogRepository.findByGenre(genre));
+    public Optional<List<Disc>> filterByGenre(@NonNull final enDiscGenre genre, @NonNull final Pageable pageable) {
+
+        return Optional.of(this.discCatalogRepository.findByGenre(genre, pageable));
     }
 
     @Override
-    public Optional<Disc> findById(Integer id) {
+    public Optional<Disc> findById(@NonNull final Integer id) {
         return this.discCatalogRepository.findById(id);
     }
 }

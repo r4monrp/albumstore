@@ -3,6 +3,9 @@ app:
   name: albumstore
   description: Albumstore is an API to manager Discs and Sales
   version: 0.0.1
+  contact: Ramon Pereira
+  url: https://www.linkedin.com/in/ramon-pereira-94a04b107/
+  email: ramon.alves@live.com
 spotify:
   clientId: ${ALBUMSTORE_SPOTIFY_CLIENT_ID:default}
   clientSecret: ${ALBUMSTORE_SPOTIFY_CLIENT_SECRET:default}
