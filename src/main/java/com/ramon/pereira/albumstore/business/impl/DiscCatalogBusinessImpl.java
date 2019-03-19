@@ -19,9 +19,9 @@ public class DiscCatalogBusinessImpl implements DiscCatalogBusiness {
     private DiscCatalogRepository discCatalogRepository;
 
     @Override
-    public Optional<List<Disc>> filterByGenre(@NonNull final enDiscGenre genre, @NonNull final Pageable pageable) {
+    public Optional<List<Disc>> findByGenreOrderByNameAsc(@NonNull final enDiscGenre genre, @NonNull final Pageable pageable) {
 
-        return Optional.of(this.discCatalogRepository.findByGenre(genre, pageable));
+        return Optional.of(this.discCatalogRepository.findByGenreOrderByNameAsc(genre, pageable));
     }
 
     @Override

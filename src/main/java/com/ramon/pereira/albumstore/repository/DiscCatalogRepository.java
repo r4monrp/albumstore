@@ -13,5 +13,5 @@ import java.util.List;
 @Repository
 public interface DiscCatalogRepository extends JpaRepository<Disc, Integer> {
 
-    List<Disc> findByGenre(@NonNull final enDiscGenre genre, @NonNull final Pageable pageable);
+    List<Disc> findByGenreOrderByNameAsc(@NonNull final enDiscGenre genre, @NonNull final Pageable pageable);
 }

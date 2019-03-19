@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DiscCatalogBusiness {
-    Optional<List<Disc>> filterByGenre(@NonNull final enDiscGenre genre, @NonNull final Pageable pageable);
+    Optional<List<Disc>> findByGenreOrderByNameAsc(@NonNull final enDiscGenre genre, @NonNull final Pageable pageable);
 
     Optional<Disc> findById(@NonNull final Integer id);
 }
