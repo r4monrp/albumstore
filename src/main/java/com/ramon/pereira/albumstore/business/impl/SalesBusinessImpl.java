@@ -2,9 +2,11 @@ package com.ramon.pereira.albumstore.business.impl;
 
 import com.ramon.pereira.albumstore.business.SalesBusiness;
 import com.ramon.pereira.albumstore.model.Sale;
+import com.ramon.pereira.albumstore.repository.CashbackByGenreAndDayRepository;
 import com.ramon.pereira.albumstore.repository.SalesRepository;
 
 import java.time.ZonedDateTime;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +22,9 @@ public class SalesBusinessImpl implements SalesBusiness {
   @Autowired
   private SalesRepository salesRepository;
 
+  @Autowired
+  private CashbackByGenreAndDayRepository cashbackByGenreAndDayRepository;
+
   @Override
   public Optional<List<Sale>> findByCreatedAtBetweenOrderByCreatedAtDesc(@NonNull final ZonedDateTime startDate,
                                                                          @NonNull final ZonedDateTime endDate,
@@ -31,18 +36,12 @@ public class SalesBusinessImpl implements SalesBusiness {
 
   @Override
   public Optional<Sale> findById(@NonNull final Integer id) {
-
     return salesRepository.findById(id);
-
   }
 
   @Override
   public Optional<Sale> create(@NonNull final Sale sale) {
-
-    salesRepository.saveAndFlush(sale);
-
-    return Optional.of(sale);
-
+    return Optional.of(salesRepository.saveAndFlush(sale));
   }
 
 }
