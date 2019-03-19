@@ -4,13 +4,13 @@ import lombok.Getter;
 
 @Getter
 public enum enDay {
-  SUNDAY(1),
-  MONDAY(2),
-  TUESDAY(3),
-  WEDNESDAY(4),
-  THURSDAY(5),
-  FRIDAY(6),
-  SATURDAY(7);
+  MONDAY(1),
+  TUESDAY(2),
+  WEDNESDAY(3),
+  THURSDAY(4),
+  FRIDAY(5),
+  SATURDAY(6),
+  SUNDAY(7);
 
   private Integer id;
 

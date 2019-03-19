@@ -12,6 +12,7 @@ import com.ramon.pereira.albumstore.repository.SalesRepository;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.LongStream;
@@ -59,14 +60,13 @@ public class SalesBusinessImpl implements SalesBusiness {
 
 
   protected BigDecimal calculeTotalCashbackFromSaleBySaleItems(@NonNull final List<SaleItem> saleItems) {
-
     return BigDecimal.valueOf(saleItems.stream()
         .flatMapToLong(saleItem -> (LongStream) saleItem.getCashBackValue()).sum());
   }
 
   protected BigDecimal processCashBackValue(@NonNull final SaleItem saleItem) {
     return calculeTotalCashbackPerItem(saleItem.getTotalPrice(),
-        getCashbackByGenreAndDay(saleItem.getGenre(), enDay.SATURDAY));
+        getCashbackByGenreAndDay(saleItem.getGenre(), enDay.valueOf(ZonedDateTime.now().getDayOfWeek().toString())));
   }
 
   protected BigDecimal calculeTotalCashbackPerItem(@NonNull final BigDecimal totalItemPrice,
@@ -78,6 +78,8 @@ public class SalesBusinessImpl implements SalesBusiness {
 
   protected BigDecimal getCashbackByGenreAndDay(@NonNull final enDiscGenre enDiscGenre, @NonNull final enDay enDay) {
 
-    return cashbackByGenreAndDayRepository.findByGenreAndDay(enDiscGenre, enDay).get().getPercentCashBack();
+    return cashbackByGenreAndDayRepository.findByGenreAndDay(enDiscGenre, enDay)
+        .map(CashbackByGenreAndDay::getPercentCashBack)
+        .orElse(BigDecimal.ZERO);
   }
 }
