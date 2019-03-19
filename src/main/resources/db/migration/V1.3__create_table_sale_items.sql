@@ -1,6 +1,6 @@
 CREATE TABLE albumstore.sale_items (
   sale_id INT NOT NULL,
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(300) NOT NULL,
   genre SMALLINT NOT NULL,
   quantity INT(11) NOT NULL,

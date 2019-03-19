@@ -1,5 +1,5 @@
 CREATE TABLE albumstore.catalog_disks (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(300) NOT NULL,
   genre SMALLINT NOT NULL,
   price DECIMAL(10,2) NOT NULL,

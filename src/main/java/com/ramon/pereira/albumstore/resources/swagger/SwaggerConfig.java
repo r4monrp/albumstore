@@ -40,7 +40,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
   @Bean
   public Docket parserApi() {
     return new Docket(DocumentationType.SWAGGER_2)
-        .select().apis(RequestHandlerSelectors.basePackage("com.ramon.pereira.albumstore.v1.controller"))
+        .select().apis(RequestHandlerSelectors.basePackage("com.ramon.pereira.albumstore.resources.v1.controllers"))
         .paths(regex("/albumstore.*"))
         .build()
         .apiInfo(metaData());

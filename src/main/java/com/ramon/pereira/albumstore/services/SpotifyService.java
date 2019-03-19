@@ -8,8 +8,12 @@ import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import com.wrapper.spotify.model_objects.specification.Paging;
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
 import com.wrapper.spotify.requests.data.search.simplified.SearchAlbumsRequest;
+
 import lombok.NonNull;
+import lombok.SneakyThrows;
+import org.aspectj.lang.annotation.After;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -20,57 +24,57 @@ import java.util.Optional;
 @Component
 public class SpotifyService {
 
-    @Value("spotify.clientId")
-    private static String clientId;
+  @Value("${spotify.client-id}")
+  private String clientId;
 
-    @Value("spotify.clientSecret")
-    private static String clientSecret;
+  @Value("${spotify.client-secret}")
+  private String clientSecret;
 
-    private static SpotifyApi spotifyApi;
+  private static SpotifyApi spotifyApi;
 
-    SpotifyService() throws IOException, SpotifyWebApiException {
-        spotifyAuthenticate();
-    }
+  public void spotifyAuthenticate() throws SpotifyWebApiException, IOException{
 
-    private static void spotifyAuthenticate() throws SpotifyWebApiException, IOException {
-        spotifyApi = new SpotifyApi.Builder()
-                .setClientId(clientId)
-                .setClientSecret(clientSecret)
-                .build();
+      spotifyApi = new SpotifyApi.Builder()
+          .setClientId(this.clientId)
+          .setClientSecret(this.clientSecret)
+          .build();
 
-        final ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials()
-                .build();
+      final ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials()
+          .build();
 
-        final ClientCredentials clientCredentials = clientCredentialsRequest.execute();
+      final ClientCredentials clientCredentials = clientCredentialsRequest.execute();
 
-        spotifyApi.setAccessToken(clientCredentials.getAccessToken());
-    }
+      spotifyApi.setAccessToken(clientCredentials.getAccessToken());
 
-    private Optional<List<AlbumSimplified>> getAlbuns(@NonNull final String genrer) throws SpotifyWebApiException, IOException {
-        final SearchAlbumsRequest getAlbumRequest = spotifyApi.searchAlbums(genrer)
-                .market(CountryCode.BR)
-                .limit(50)
-                .offset(50)
-                .build();
+  }
 
-        final Paging<AlbumSimplified> album = getAlbumRequest.execute();
+  private Optional<List<AlbumSimplified>> getAlbuns(@NonNull final String genrer) throws SpotifyWebApiException, IOException {
 
-        return Optional.of(Arrays.asList(album.getItems()));
-    }
+    final SearchAlbumsRequest getAlbumRequest = spotifyApi.searchAlbums(genrer)
+        .market(CountryCode.BR)
+        .limit(50)
+        .offset(50)
+        .build();
 
-    public Optional<List<AlbumSimplified>> getRockAlbuns() throws IOException, SpotifyWebApiException {
-        return this.getAlbuns("rock");
-    }
+    final Paging<AlbumSimplified> album = getAlbumRequest.execute();
 
-    public Optional<List<AlbumSimplified>> getPopAlbuns() throws IOException, SpotifyWebApiException {
-        return this.getAlbuns("pop");
-    }
+    return Optional.of(Arrays.asList(album.getItems()));
 
-    public Optional<List<AlbumSimplified>> getMpbAlbuns() throws IOException, SpotifyWebApiException {
-        return this.getAlbuns("mpb");
-    }
+  }
 
-    public Optional<List<AlbumSimplified>> getClassicAlbuns() throws IOException, SpotifyWebApiException {
-        return this.getAlbuns("classic");
-    }
+  public Optional<List<AlbumSimplified>> getRockAlbuns() throws IOException, SpotifyWebApiException {
+    return this.getAlbuns("rock");
+  }
+
+  public Optional<List<AlbumSimplified>> getPopAlbuns() throws IOException, SpotifyWebApiException {
+    return this.getAlbuns("pop");
+  }
+
+  public Optional<List<AlbumSimplified>> getMpbAlbuns() throws IOException, SpotifyWebApiException {
+    return this.getAlbuns("mpb");
+  }
+
+  public Optional<List<AlbumSimplified>> getClassicAlbuns() throws IOException, SpotifyWebApiException {
+    return this.getAlbuns("classic");
+  }
 }

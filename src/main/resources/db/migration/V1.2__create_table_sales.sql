@@ -1,5 +1,5 @@
 CREATE TABLE albumstore.sales (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
   customer_name VARCHAR(300) NOT NULL,
   customer_email VARCHAR(300) NOT NULL,
   customer_cpf INT(11) NOT NULL,

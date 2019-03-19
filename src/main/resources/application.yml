@@ -6,9 +6,6 @@ app:
   contact: Ramon Pereira
   url: https://www.linkedin.com/in/ramon-pereira-94a04b107/
   email: ramon.alves@live.com
-spotify:
-  clientId: ${ALBUMSTORE_SPOTIFY_CLIENT_ID}
-  clientSecret: ${ALBUMSTORE_SPOTIFY_CLIENT_SECRET}
 spring:
   datasource:
     url: ${ALBUMSTORE_DATASOURCE_URL}
@@ -28,3 +25,10 @@ spring:
     default-property-inclusion: non_null
     serialization:
       fail-on-empty-beans: false
+  security:
+    user:
+      name: ${ALBUMSTORE_SECURITY_BASIC_NAME}
+      password: ${ALBUMSTORE_SECURITY_BASIC_PASSWORD}
+spotify:
+  client-id: ${ALBUMSTORE_SPOTIFY_CLIENT_ID}
+  client-secret: ${ALBUMSTORE_SPOTIFY_CLIENT_SECRET}

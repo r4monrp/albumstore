@@ -6,7 +6,6 @@ import com.ramon.pereira.albumstore.model.enDiscGenre;
 import com.ramon.pereira.albumstore.repository.DiscCatalogRepository;
 import com.ramon.pereira.albumstore.services.SpotifyService;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
-import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -29,74 +28,103 @@ public class LoadDataOnStartup implements ApplicationListener<ContextRefreshedEv
 
   @Override
   public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-    try {
-      initData();
-    } catch (IOException | SpotifyWebApiException e) {
-      e.printStackTrace();
-    }
+    initData();
   }
 
-  private void initData() throws IOException, SpotifyWebApiException {
+  private void initData() {
+    this.authenticateSpotifyService();
     this.createDisksRock();
     this.createDisksMpb();
     this.createDisksClassic();
     this.createDisksPop();
   }
 
-  private void createDisksRock() throws IOException, SpotifyWebApiException {
+  private void authenticateSpotifyService() {
+    try {
 
-    var albuns = spotifyService.getRockAlbuns();
+      this.spotifyService.spotifyAuthenticate();
 
-    albuns.ifPresent(albumSimplifieds -> albumSimplifieds.forEach(item -> {
-      discCatalogRepository.saveAndFlush(Disc.builder()
-          .genre(enDiscGenre.ROCK)
-          .name(item.getName())
-          .price(BigDecimal.valueOf(faker.number().numberBetween(1, 1000)))
-          .build());
-    }));
+    } catch (SpotifyWebApiException | IOException ex) {
 
+      System.out.println("ERROR: NO POSSIBLE AUTHENTICATE SPOTFY SERVICE" + ex);
+
+    }
   }
 
-  private void createDisksMpb() throws IOException, SpotifyWebApiException {
+  private void createDisksRock() {
+    try {
+      var albuns = spotifyService.getRockAlbuns();
 
-    var albuns = spotifyService.getMpbAlbuns();
+      albuns.ifPresent(albumSimplifieds -> albumSimplifieds.forEach(item -> {
+        discCatalogRepository.saveAndFlush(Disc.builder()
+            .genre(enDiscGenre.ROCK)
+            .name(item.getName())
+            .price(BigDecimal.valueOf(faker.number().numberBetween(1, 1000)))
+            .build());
+      }));
 
-    albuns.ifPresent(albumSimplifieds -> albumSimplifieds.forEach(item -> {
-      discCatalogRepository.saveAndFlush(Disc.builder()
-          .genre(enDiscGenre.MPB)
-          .name(item.getName())
-          .price(BigDecimal.valueOf(faker.number().numberBetween(1, 1000)))
-          .build());
-    }));
+    } catch (SpotifyWebApiException | IOException ex) {
 
+      System.out.println("ERROR: NO POSSIBLE LOAD DATA CREATE DISKS ROCK SPOTFY SERVICE:" + ex);
+
+    }
   }
 
-  private void createDisksClassic() throws IOException, SpotifyWebApiException {
+  private void createDisksMpb() {
+    try {
+      var albuns = spotifyService.getMpbAlbuns();
 
-    var albuns = spotifyService.getClassicAlbuns();
+      albuns.ifPresent(albumSimplifieds -> albumSimplifieds.forEach(item -> {
+        discCatalogRepository.saveAndFlush(Disc.builder()
+            .genre(enDiscGenre.MPB)
+            .name(item.getName())
+            .price(BigDecimal.valueOf(faker.number().numberBetween(1, 1000)))
+            .build());
+      }));
 
-    albuns.ifPresent(albumSimplifieds -> albumSimplifieds.forEach(item -> {
-      discCatalogRepository.saveAndFlush(Disc.builder()
-          .genre(enDiscGenre.CLASSIC)
-          .name(item.getName())
-          .price(BigDecimal.valueOf(faker.number().numberBetween(1, 1000)))
-          .build());
-    }));
+    } catch (SpotifyWebApiException | IOException ex) {
 
+      System.out.println("ERROR: NO POSSIBLE LOAD DATA CREATE DISKS MPB SPOTFY SERVICE:" + ex);
+
+    }
   }
 
-  private void createDisksPop() throws IOException, SpotifyWebApiException {
+  private void createDisksClassic() {
+    try {
+      var albuns = spotifyService.getClassicAlbuns();
 
-    var albuns = spotifyService.getPopAlbuns();
+      albuns.ifPresent(albumSimplifieds -> albumSimplifieds.forEach(item -> {
+        discCatalogRepository.saveAndFlush(Disc.builder()
+            .genre(enDiscGenre.CLASSIC)
+            .name(item.getName())
+            .price(BigDecimal.valueOf(faker.number().numberBetween(1, 1000)))
+            .build());
+      }));
 
-    albuns.ifPresent(albumSimplifieds -> albumSimplifieds.forEach(item -> {
-      discCatalogRepository.saveAndFlush(Disc.builder()
-          .genre(enDiscGenre.POP)
-          .name(item.getName())
-          .price(BigDecimal.valueOf(faker.number().numberBetween(1, 1000)))
-          .build());
-    }));
+    } catch (SpotifyWebApiException | IOException ex) {
 
+      System.out.println("ERROR: NO POSSIBLE LOAD DATA CREATE DISKS CLASSIC SPOTFY SERVICE:" + ex);
+
+    }
+  }
+
+  private void createDisksPop() {
+    try {
+      var albuns = spotifyService.getPopAlbuns();
+
+      albuns.ifPresent(albumSimplifieds -> albumSimplifieds.forEach(item -> {
+        discCatalogRepository.saveAndFlush(Disc.builder()
+            .genre(enDiscGenre.POP)
+            .name(item.getName())
+            .price(BigDecimal.valueOf(faker.number().numberBetween(1, 1000)))
+            .build());
+      }));
+
+    } catch (SpotifyWebApiException | IOException ex) {
+
+      System.out.println("ERROR: NO POSSIBLE LOAD DATA CREATE DISKS POP SPOTFY SERVICE:" + ex);
+
+    }
   }
 
 }
