@@ -11,6 +11,7 @@ import com.ramon.pereira.albumstore.repository.SalesRepository;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.LongStream;
@@ -46,29 +47,37 @@ public class SalesBusinessImpl implements SalesBusiness {
   @Override
   public Optional<Sale> create(@NonNull final Sale sale) {
 
+    Optional.of(sale.getItems())
+        .ifPresent(v -> v.forEach(e -> {
+          e.setCashBackValue(processCashBackValue(e));
+        }));
 
-    sale.setCashBackTotalValue(
-        BigDecimal.valueOf(sale.getItems().stream()
-            .flatMapToLong(saleItem -> (LongStream) saleItem.getCashBackValue()).sum())
-    );
+    sale.setCashBackTotalValue(calculeTotalCashbackFromSaleBySaleItems(sale.getItems()));
 
     return Optional.of(salesRepository.saveAndFlush(sale));
   }
 
-  protected Optional<List<SaleItem>> calculeCashbackByItem(@NonNull List<SaleItem> saleItems) {
 
+  protected BigDecimal calculeTotalCashbackFromSaleBySaleItems(@NonNull final List<SaleItem> saleItems) {
+
+    return BigDecimal.valueOf(saleItems.stream()
+        .flatMapToLong(saleItem -> (LongStream) saleItem.getCashBackValue()).sum());
   }
 
-  protected BigDecimal calculeTotalCashbackPerItem(@NonNull final Integer quantity,
-                                                   @NonNull final BigDecimal unitaryPrice,
+  protected BigDecimal processCashBackValue(@NonNull final SaleItem saleItem) {
+    return calculeTotalCashbackPerItem(saleItem.getTotalPrice(),
+        getCashbackByGenreAndDay(saleItem.getGenre(), enDay.SATURDAY));
+  }
+
+  protected BigDecimal calculeTotalCashbackPerItem(@NonNull final BigDecimal totalItemPrice,
                                                    @NonNull final BigDecimal cashbackPercent) {
 
-
+    return totalItemPrice.multiply(new BigDecimal(100)).divide(cashbackPercent);
   }
 
-  protected Optional<CashbackByGenreAndDay> getCashbackByGenreAndDay(@NonNull final enDiscGenre enDiscGenre,
-                                                                     @NonNull final enDay enDay) {
 
-    return cashbackByGenreAndDayRepository.findByGenreAndDay(enDiscGenre, enDay);
+  protected BigDecimal getCashbackByGenreAndDay(@NonNull final enDiscGenre enDiscGenre, @NonNull final enDay enDay) {
+
+    return cashbackByGenreAndDayRepository.findByGenreAndDay(enDiscGenre, enDay).get().getPercentCashBack();
   }
 }
