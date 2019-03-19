@@ -30,7 +30,7 @@ public class CashbackByGenreAndDay {
   @Enumerated(EnumType.ORDINAL)
   private enDiscGenre genre;
 
-  @Column
+  @Id
   @Enumerated(EnumType.ORDINAL)
   private enDay day;
 
