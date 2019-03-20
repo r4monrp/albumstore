@@ -59,7 +59,7 @@ public class SalesBusinessImpl implements SalesBusiness {
 
   protected BigDecimal calculeTotalCashbackFromSaleBySaleItems(@NonNull final List<SaleItem> saleItems) {
     var total = BigDecimal.ZERO;
-    saleItems.forEach(saleItem -> total.add(new BigDecimal(saleItem.getCashBackValue().longValue())));
+    saleItems.forEach(saleItem -> total.add(BigDecimal.valueOf(saleItem.getCashBackValue().longValue())));
     return total;
   }
 
@@ -71,9 +71,7 @@ public class SalesBusinessImpl implements SalesBusiness {
   protected BigDecimal calculeTotalCashbackPerItem(@NonNull final BigDecimal totalItemPrice,
                                                    @NonNull final BigDecimal cashbackPercent) {
 
-    return cashbackPercent != BigDecimal.ZERO ?
-        totalItemPrice.multiply(new BigDecimal(100)).divide(cashbackPercent)
-        : BigDecimal.ZERO;
+    return totalItemPrice.divide(new BigDecimal(100)).multiply(cashbackPercent);
   }
 
 
