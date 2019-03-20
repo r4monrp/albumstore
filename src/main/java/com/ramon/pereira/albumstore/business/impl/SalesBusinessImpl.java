@@ -1,6 +1,7 @@
 package com.ramon.pereira.albumstore.business.impl;
 
 import com.ramon.pereira.albumstore.business.SalesBusiness;
+import com.ramon.pereira.albumstore.exception.SaleNotFoundException;
 import com.ramon.pereira.albumstore.model.CashbackByGenreAndDay;
 import com.ramon.pereira.albumstore.model.Sale;
 import com.ramon.pereira.albumstore.model.SaleItem;
@@ -40,7 +41,7 @@ public class SalesBusinessImpl implements SalesBusiness {
 
   @Override
   public Optional<Sale> findById(@NonNull final Integer id) {
-    return salesRepository.findById(id);
+    return Optional.of(salesRepository.findById(id).orElseThrow(SaleNotFoundException::new));
   }
 
   @Override

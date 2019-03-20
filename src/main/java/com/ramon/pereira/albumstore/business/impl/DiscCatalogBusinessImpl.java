@@ -1,6 +1,7 @@
 package com.ramon.pereira.albumstore.business.impl;
 
 import com.ramon.pereira.albumstore.business.DiscCatalogBusiness;
+import com.ramon.pereira.albumstore.exception.DiscNotFoundException;
 import com.ramon.pereira.albumstore.model.Disc;
 import com.ramon.pereira.albumstore.model.enDiscGenre;
 import com.ramon.pereira.albumstore.repository.DiscCatalogRepository;
@@ -28,6 +29,6 @@ public class DiscCatalogBusinessImpl implements DiscCatalogBusiness {
 
   @Override
   public Optional<Disc> findById(@NonNull final Integer id) {
-    return this.discCatalogRepository.findById(id);
+    return Optional.of(this.discCatalogRepository.findById(id).orElseThrow(DiscNotFoundException::new));
   }
 }
