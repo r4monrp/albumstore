@@ -35,7 +35,7 @@ public class DiscCatalogController {
 
   @GetMapping("/{id}")
   @ResponseBody
-  @ApiOperation(value = "Get By ID", response = Disc.class, produces = "application/json")
+  @ApiOperation(value = "Get By ID", response = DiscResponseDto.class, produces = "application/json")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "Success"),
       @ApiResponse(code = 400, message = "Bad Request"),
@@ -43,13 +43,13 @@ public class DiscCatalogController {
       @ApiResponse(code = 500, message = "Internal Server Error")})
   public Optional<DiscResponseDto> findById(@PathVariable final Integer id) {
 
-    return discMapper.serialize(discCatalogBusiness.findById(id));
+    return discMapper.serializeToDto(discCatalogBusiness.findById(id));
   }
 
 
   @GetMapping("/genre")
   @ResponseBody
-  @ApiOperation(value = "Filter Albuns By Genre", response = String.class, produces = "application/json")
+  @ApiOperation(value = "Filter Albuns By Genre", response = DiscResponseDto.class, produces = "application/json")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "Success"),
       @ApiResponse(code = 400, message = "Bad Request"),
@@ -59,6 +59,6 @@ public class DiscCatalogController {
                                                         @RequestParam(value = "page", defaultValue = "0") final int page,
                                                         @RequestParam(value = "pagesize", defaultValue = "10") final int pagesize) {
 
-    return discMapper.serializeList(discCatalogBusiness.findByGenreOrderByNameAsc(genre, PageRequest.of(page, pagesize)));
+    return discMapper.serializeListToDto(discCatalogBusiness.findByGenreOrderByNameAsc(genre, PageRequest.of(page, pagesize)));
   }
 }

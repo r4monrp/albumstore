@@ -2,6 +2,7 @@ package com.ramon.pereira.albumstore.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -47,9 +48,9 @@ public class Sale implements Serializable {
     private String customerEmail;
 
     @Column
-    private Integer customerCpf;
+    private Long customerCpf;
 
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "sales")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "sale")
     @JsonManagedReference
     private List<SaleItem> items;
 

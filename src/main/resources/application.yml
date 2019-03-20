@@ -25,10 +25,6 @@ spring:
     default-property-inclusion: non_null
     serialization:
       fail-on-empty-beans: false
-  security:
-    user:
-      name: ${ALBUMSTORE_SECURITY_BASIC_NAME}
-      password: ${ALBUMSTORE_SECURITY_BASIC_PASSWORD}
 spotify:
   client-id: ${ALBUMSTORE_SPOTIFY_CLIENT_ID}
   client-secret: ${ALBUMSTORE_SPOTIFY_CLIENT_SECRET}

@@ -15,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -33,6 +34,9 @@ public class SaleItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column
+    private Integer discId;
 
     @Column
     private String name;
@@ -54,7 +58,7 @@ public class SaleItem implements Serializable {
     private BigDecimal cashBackValue;
 
     @JsonBackReference
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name = "sale_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    private Sale sales;
+    private Sale sale;
 }

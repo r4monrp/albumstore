@@ -2,6 +2,7 @@ package com.ramon.pereira.albumstore.business.impl;
 
 import com.ramon.pereira.albumstore.business.SalesBusiness;
 import com.ramon.pereira.albumstore.model.CashbackByGenreAndDay;
+import com.ramon.pereira.albumstore.model.CashbackByGenreAndDayPK;
 import com.ramon.pereira.albumstore.model.Sale;
 import com.ramon.pereira.albumstore.model.SaleItem;
 import com.ramon.pereira.albumstore.model.enDay;
@@ -51,6 +52,7 @@ public class SalesBusinessImpl implements SalesBusiness {
     Optional.of(sale.getItems())
         .ifPresent(v -> v.forEach(e -> {
           e.setCashBackValue(processCashBackValue(e));
+          e.setSale(sale);
         }));
 
     sale.setCashBackTotalValue(calculeTotalCashbackFromSaleBySaleItems(sale.getItems()));
@@ -60,8 +62,9 @@ public class SalesBusinessImpl implements SalesBusiness {
 
 
   protected BigDecimal calculeTotalCashbackFromSaleBySaleItems(@NonNull final List<SaleItem> saleItems) {
-    return BigDecimal.valueOf(saleItems.stream()
-        .flatMapToLong(saleItem -> (LongStream) saleItem.getCashBackValue()).sum());
+    var total = BigDecimal.ZERO;
+    saleItems.forEach(saleItem -> total.add(saleItem.getCashBackValue()));
+    return total;
   }
 
   protected BigDecimal processCashBackValue(@NonNull final SaleItem saleItem) {
@@ -72,13 +75,15 @@ public class SalesBusinessImpl implements SalesBusiness {
   protected BigDecimal calculeTotalCashbackPerItem(@NonNull final BigDecimal totalItemPrice,
                                                    @NonNull final BigDecimal cashbackPercent) {
 
-    return totalItemPrice.multiply(new BigDecimal(100)).divide(cashbackPercent);
+    return cashbackPercent != BigDecimal.ZERO ?
+        totalItemPrice.multiply(new BigDecimal(100)).divide(cashbackPercent)
+        : BigDecimal.ZERO;
   }
 
 
   protected BigDecimal getCashbackByGenreAndDay(@NonNull final enDiscGenre enDiscGenre, @NonNull final enDay enDay) {
-
-    return cashbackByGenreAndDayRepository.findByGenreAndDay(enDiscGenre, enDay)
+    var result = cashbackByGenreAndDayRepository.findById(new CashbackByGenreAndDayPK(enDiscGenre, enDay));
+    return cashbackByGenreAndDayRepository.findById(new CashbackByGenreAndDayPK(enDiscGenre, enDay))
         .map(CashbackByGenreAndDay::getPercentCashBack)
         .orElse(BigDecimal.ZERO);
   }

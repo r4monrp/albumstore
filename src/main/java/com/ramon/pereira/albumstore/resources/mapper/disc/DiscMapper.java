@@ -13,22 +13,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class DiscMapper {
 
-  public Optional<List<DiscResponseDto>> serializeList(@NonNull final Optional<List<Disc>> disks) {
+  public Optional<List<DiscResponseDto>> serializeListToDto(@NonNull final Optional<List<Disc>> disks) {
 
     final var serializers = new ArrayList<DiscResponseDto>();
 
     disks.ifPresent(t -> t.forEach(disc -> {
-      serializers.add(serialize(Optional.of(disc)).get());
+      serializers.add(serializeToDto(Optional.of(disc)).get());
     }));
 
     return Optional.of(serializers);
   }
 
-  public Optional<DiscResponseDto> serialize(@NonNull final Optional<Disc> disc) {
+  public Optional<DiscResponseDto> serializeToDto(@NonNull final Optional<Disc> disc) {
     final Disc model = disc.get();
     return Optional.of(DiscResponseDto.builder()
         .id(model.getId())
         .name(model.getName())
+        .genre(model.getGenre())
         .price(model.getPrice())
         .createdAt(model.getCreatedAt())
         .build());
