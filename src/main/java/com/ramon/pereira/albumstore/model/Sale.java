@@ -22,7 +22,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -61,8 +61,8 @@ public class Sale implements Serializable {
     private BigDecimal cashBackTotalValue;
 
     @Column
-    private ZonedDateTime createdAt;
+    private Date createdAt;
 
     @PrePersist
-    protected void prePersist() { createdAt = ZonedDateTime.now();}
+    protected void prePersist() { createdAt = new Date();}
 }

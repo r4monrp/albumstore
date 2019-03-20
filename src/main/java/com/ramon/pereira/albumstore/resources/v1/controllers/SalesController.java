@@ -1,7 +1,6 @@
 package com.ramon.pereira.albumstore.resources.v1.controllers;
 
 import com.ramon.pereira.albumstore.business.SalesBusiness;
-import com.ramon.pereira.albumstore.model.Sale;
 import com.ramon.pereira.albumstore.resources.mapper.sale.SaleMapper;
 import com.ramon.pereira.albumstore.resources.v1.dtos.sale.SaleRequestDto;
 import com.ramon.pereira.albumstore.resources.v1.dtos.sale.SaleResponseDto;
@@ -10,8 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-import java.lang.reflect.Type;
-import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +17,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,8 +61,10 @@ public class SalesController {
       @ApiResponse(code = 400, message = "Bad Request"),
       @ApiResponse(code = 404, message = "Not Found"),
       @ApiResponse(code = 500, message = "Internal Server Error")})
-  public Optional<List<SaleResponseDto>> findByCreatedAtBetweenOrderByCreatedAtDesc(@RequestParam final ZonedDateTime startDate,
-                                                                                    @RequestParam final ZonedDateTime endDate,
+  public Optional<List<SaleResponseDto>> findByCreatedAtBetweenOrderByCreatedAtDesc(@RequestParam(name = "startDate", defaultValue = "1900-01-01")
+                                                                                      @DateTimeFormat(pattern = "yyyy-MM-dd") final Date startDate,
+                                                                                    @RequestParam(name = "endDate", defaultValue = "1900-01-01")
+                                                                                    @DateTimeFormat(pattern = "yyyy-MM-dd") final Date endDate,
                                                                                     @RequestParam(value = "page", defaultValue = "0") final int page,
                                                                                     @RequestParam(value = "pagesize", defaultValue = "10") final int pagesize) {
 

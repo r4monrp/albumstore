@@ -11,6 +11,7 @@ import com.ramon.pereira.albumstore.repository.SalesRepository;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +30,8 @@ public class SalesBusinessImpl implements SalesBusiness {
   private CashbackByGenreAndDayRepository cashbackByGenreAndDayRepository;
 
   @Override
-  public Optional<List<Sale>> findByCreatedAtBetweenOrderByCreatedAtDesc(@NonNull final ZonedDateTime startDate,
-                                                                         @NonNull final ZonedDateTime endDate,
+  public Optional<List<Sale>> findByCreatedAtBetweenOrderByCreatedAtDesc(@NonNull final Date startDate,
+                                                                         @NonNull final Date endDate,
                                                                          @NonNull final Pageable pageable) {
 
     return salesRepository.findByCreatedAtBetweenOrderByCreatedAtDesc(startDate, endDate, pageable);

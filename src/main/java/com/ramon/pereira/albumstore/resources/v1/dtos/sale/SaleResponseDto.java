@@ -1,7 +1,9 @@
 package com.ramon.pereira.albumstore.resources.v1.dtos.sale;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -25,5 +27,6 @@ public class SaleResponseDto {
   private List<SaleItemResponseDto> items;
   private BigDecimal totalPrice;
   private BigDecimal cashBackTotalValue;
-  private ZonedDateTime createdAt;
+  @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
+  private Date createdAt;
 }

@@ -13,7 +13,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -38,10 +38,11 @@ public class Disc implements Serializable {
     @Column
     private BigDecimal price;
 
+
     @Column
-    private ZonedDateTime createdAt;
+    private Date createdAt;
 
     @PrePersist
-    protected void prePersist() { createdAt = ZonedDateTime.now();
+    protected void prePersist() { createdAt = new Date();
     }
 }
