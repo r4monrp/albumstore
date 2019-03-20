@@ -32,7 +32,7 @@ public class Disc implements Serializable {
     private String name;
 
     @Column
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private enDiscGenre genre;
 
     @Column

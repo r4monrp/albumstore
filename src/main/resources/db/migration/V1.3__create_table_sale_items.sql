@@ -3,7 +3,7 @@ CREATE TABLE albumstore.sale_items (
   id INT NOT NULL AUTO_INCREMENT,
   disc_id INT NOT NULL,
   name VARCHAR(300) NOT NULL,
-  genre SMALLINT NOT NULL,
+  genre VARCHAR(15) NOT NULL,
   quantity INT(11) NOT NULL,
   price DECIMAL(10,2) NOT NULL,
   total_price DECIMAL(10,2) NOT NULL,

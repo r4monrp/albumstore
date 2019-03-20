@@ -1,7 +1,7 @@
-INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES (1, 1, 7.00);
-INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES (1, 2, 6.00);
-INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES (1, 3, 2.00);
-INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES (1, 4, 10.00);
-INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES (1, 5, 15.00);
-INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES (1, 6, 20.00);
-INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES (1, 7, 25.00);
+INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES ("POP", "MONDAY", 7.00);
+INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES ("POP", "TUESDAY", 6.00);
+INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES ("POP", "WEDNESDAY", 2.00);
+INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES ("POP", "THURSDAY", 10.00);
+INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES ("POP", "FRIDAY", 15.00);
+INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES ("POP", "SATURDAY", 20.00);
+INSERT INTO albumstore.cashback_by_genre_and_day (genre, day, percent_cash_back) VALUES ("POP", "SUNDAY", 25.00);
