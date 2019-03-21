@@ -21,7 +21,7 @@ public class AlbumstoreExceptionHandler {
     return ErrorMessage.builder()
         .developerMessage("No records were found for your search")
         .userMessage("No records were found for your search")
-        .errorCode(1).build();
+        .errorCode(2).build();
   }
 
   @ResponseBody
@@ -31,6 +31,6 @@ public class AlbumstoreExceptionHandler {
     return ErrorMessage.builder()
         .developerMessage("No records were found for your search")
         .userMessage("No records were found for your search")
-        .errorCode(1).build();
+        .errorCode(2).build();
   }
 }
