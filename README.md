@@ -10,7 +10,7 @@ Web Api Albuns Store
 Java 11
 Docker Compose
 Plugin Lombok
-Maven (Podendo utilizar o mvnw incluso no projeto)
+Maven
 MySql (Podendo utilizar o docker compose)
 ```
 
@@ -92,7 +92,7 @@ Mantenha o arquivo *src/main/resources/application.yml* , *src/test/resources/ap
 **Compilar o projeto:**
 
 ```sh
-./mvnw clean install
+mvn clean install
 ```
 
 **Executar o projeto:**
