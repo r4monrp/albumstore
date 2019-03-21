@@ -1,2 +1,133 @@
-# albumstore
+# Albumstore
 Web Api Albuns Store
+
+> Albumstore é uma API para gerenciar discos e vendas com cashback
+
+![image](https://http2.mlstatic.com/kit-disco-de-vinil-pequeno-06-unidades-D_NQ_NP_951092-MLB25672011419_062017-F.jpg)
+
+## Requisitos
+```sh
+Java 11
+Docker Compose
+Plugin Lombok
+Maven (Podendo utilizar o mvnw incluso no projeto)
+MySql (Podendo utilizar o docker compose)
+```
+
+## Instalação:
+
+
+**Java 11 - SDKMAN:**
+
+```sh
+https://sdkman.io/install
+```
+
+OU
+
+**Java 11 - Java SE Development Kit 11**
+
+```sh
+https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html
+```
+
+**Banco de Dados:**
+
+**Docker compose:**
+
+Acessar a pasta raiz do projeto e executar(container executando o mysql):
+
+```sh
+https://docs.docker.com/compose/install/
+docker-compose up -d
+```
+
+OU
+
+**Mysql:**
+```sh
+https://www.mysql.com/downloads/
+Criar a DB principal utilizada na variavel de ambiente de conexão - albumstore
+```
+
+**IDEs:**
+```sh
+Intellij: https://www.jetbrains.com/idea/download
+Eclipse : https://www.eclipse.org/downloads/
+```
+
+**Lombok plugin:**
+
+```sh
+Intellij: https://projectlombok.org/setup/intellij
+Eclipse : https://projectlombok.org/setup/eclipse
+```
+
+**Obtendo Client ID e SECRET Spotify:**
+
+```sh
+https://developer.spotify.com/dashboard
+```
+
+## Ambiente
+Configure as variáveis de ambiente de acordo com o ambiente `src/main/application.yml`:
+
+| Nome | Descrição | Valor Padrão | Obrigatório |
+| -- | -- | -- | -- |
+| ALBUMSTORE_ENV | Ambiente de execução do projeto| development| |
+| ALBUMSTORE_DATASOURCE_URL | URL JDBC para conectar ao banco de dados |  | :white_check_mark: |
+| ALBUMSTORE_DATASOURCE_USERNAME | Usuário para conectar ao banco de dados | | :white_check_mark: |
+| ALBUMSTORE_DATASOURCE_PASSWORD | Senha para conectar ao banco de dados | | :white_check_mark: |
+| ALBUMSTORE_SECURITY_BASIC_NAME | Usuário para autenticar em rotas BasicAuth | | :white_check_mark: |
+| ALBUMSTORE_SECURITY_BASIC_PASSWORD | senha para autenticar em rotas BasicAuth |  | :white_check_mark:|
+| ALBUMSTORE_SECURITY_JWT_SECRET_KEY | Secret Key para geração do JWT Token | stubJWT | |
+| ALBUMSTORE_SPOTIFY_CLIENT_ID | Client ID para consumo de APIs do Spotify | | :white_check_mark: |
+| ALBUMSTORE_SPOTIFY_CLIENT_SECRET | Client SECRET para consumo de APIs do Spotify | | :white_check_mark: |
+
+
+Mantenha o arquivo *src/test/application-test.yml* e a tabela de variáveis sempre atualizada.
+
+**Acessando as variáveis:**
+
+```
+  @Value("${spotify.client-id}")
+  private String spotifyClientId;
+```
+
+
+## Configuração para Desenvolvimento
+
+Acessar a pasta raiz do projeto:
+
+
+**Compilar o projeto:**
+
+```sh
+./mvnw clean install
+```
+
+**Executar o projeto:**
+
+```sh
+java -jar target/albumstore-x.x.x.jar
+```
+
+**Obtendo um JWT Token para autenticar na API:**
+
+```sh
+https://jwt.io/
+Gerar conforme JWT_SECRET_KEY do projeto
+
+
+**Recursos da WEB API**
+
+```
+| Rota | Versão |Descrição | HTTP Method | Autenticação |
+| -- | -- | -- | -- | -- |
+| /swagger-ui.html | 1 |Interface para documentação da API| GET | |
+| /albumstore/v1/disccatalog/supplyDiskCatalog | v1 | Método para consumir o Spotify e carregar o catalogo de discos | GET |  [:white_check_mark:] [OAuth2] |
+| /albumstore/v1/disccatalog/{id} | v1 | Método para buscar disco pelo seu identificador| GET |  [:white_check_mark:] [OAuth2] |
+| /albumstore/v1/disccatalog/genre| v1 | Método para buscar discos filtrando por genero| GET |  [:white_check_mark:] [OAuth2] |
+| /albumstore/v1/sales/{id}| v1 | Método para buscar venda pelo seu identificador| GET |  [:white_check_mark:] [OAuth2] |
+| /albumstore/v1/sales| v1 | Método para buscar vendas filtrando por data da venda| GET |  [:white_check_mark:] [OAuth2] |
+| /albumstore/v1/sales| v1 | Método para criar uma nova venda| POST |  [:white_check_mark:] [OAuth2] |
