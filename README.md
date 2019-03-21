@@ -85,7 +85,7 @@ Configure as variáveis de ambiente de acordo com o ambiente `src/main/applicati
 | ALBUMSTORE_SPOTIFY_CLIENT_SECRET | Client SECRET para consumo de APIs do Spotify | | :white_check_mark: |
 
 
-Mantenha o arquivo *src/test/application-test.yml* e a tabela de variáveis sempre atualizada.
+Mantenha o arquivo *src/main/resources/application.yml* , *src/test/resources/application-test.yml* e a tabela de variáveis sempre atualizada.
 
 **Acessando as variáveis:**
 
@@ -116,8 +116,8 @@ java -jar target/albumstore-x.x.x.jar
 
 ```sh
 https://jwt.io/
-Gerar conforme JWT_SECRET_KEY do projeto
-
+Gerar conforme JWT_SECRET_KEY
+```
 
 **Recursos da WEB API**
 
