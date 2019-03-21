@@ -121,7 +121,6 @@ Gerar conforme JWT_SECRET_KEY
 
 **Recursos da WEB API**
 
-```
 | Rota | Versão |Descrição | HTTP Method | Autenticação |
 | -- | -- | -- | -- | -- |
 | /swagger-ui.html | 1 |Interface para documentação da API| GET | |
