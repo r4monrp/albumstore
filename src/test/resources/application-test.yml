@@ -25,6 +25,8 @@ spring:
     default-property-inclusion: non_null
     serialization:
       fail-on-empty-beans: false
+jwt:
+  secretKey: stubJWT
 spotify:
   client-id:
   client-secret:
