@@ -1,13 +1,16 @@
-application:
+app:
   env: development
   name: '@pom.name@'
   description: '@pom.description@'
   version: '@pom.version@'
+  contact: Ramon Pereira
+  url: https://www.linkedin.com/in/ramon-pereira-94a04b107/
+  email: ramon.alves@live.com
 spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/albumstore?useSSL=false
     username: albumstore
-    password: albumstore
+    password: '!@12QWqw'
   jpa:
     hibernate.ddl-auto: none
     show-sql: true
@@ -17,8 +20,11 @@ spring:
     enabled: true
     url: jdbc:mysql://127.0.0.1:3306/albumstore?useSSL=false
     user: albumstore
-    password: albumstore
+    password: '!@12QWqw'
   jackson:
     default-property-inclusion: non_null
     serialization:
       fail-on-empty-beans: false
+spotify:
+  client-id:
+  client-secret:

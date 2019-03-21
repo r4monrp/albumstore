@@ -13,10 +13,11 @@ import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
-@Component
-public class LoadDataOnStartup implements ApplicationListener<ContextRefreshedEvent> {
+@EnableScheduling
+public class LoadDataOnStartup {
 
   private static final Faker faker = new Faker();
 
@@ -26,10 +27,7 @@ public class LoadDataOnStartup implements ApplicationListener<ContextRefreshedEv
   @Autowired
   private SpotifyService spotifyService;
 
-  @Override
-  public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-    initData();
-  }
+
 
   private void initData() {
     this.authenticateSpotifyService();
@@ -44,7 +42,7 @@ public class LoadDataOnStartup implements ApplicationListener<ContextRefreshedEv
 
       this.spotifyService.spotifyAuthenticate();
 
-    } catch (SpotifyWebApiException | IOException ex) {
+    } catch (Exception ex ) {
 
       System.out.println("ERROR: NO POSSIBLE AUTHENTICATE SPOTFY SERVICE" + ex);
 
@@ -63,7 +61,7 @@ public class LoadDataOnStartup implements ApplicationListener<ContextRefreshedEv
             .build());
       }));
 
-    } catch (SpotifyWebApiException | IOException ex) {
+    } catch (Exception ex) {
 
       System.out.println("ERROR: NO POSSIBLE LOAD DATA CREATE DISKS ROCK SPOTFY SERVICE:" + ex);
 
@@ -82,7 +80,7 @@ public class LoadDataOnStartup implements ApplicationListener<ContextRefreshedEv
             .build());
       }));
 
-    } catch (SpotifyWebApiException | IOException ex) {
+    } catch (Exception ex) {
 
       System.out.println("ERROR: NO POSSIBLE LOAD DATA CREATE DISKS MPB SPOTFY SERVICE:" + ex);
 
@@ -101,7 +99,7 @@ public class LoadDataOnStartup implements ApplicationListener<ContextRefreshedEv
             .build());
       }));
 
-    } catch (SpotifyWebApiException | IOException ex) {
+    } catch (Exception ex) {
 
       System.out.println("ERROR: NO POSSIBLE LOAD DATA CREATE DISKS CLASSIC SPOTFY SERVICE:" + ex);
 
@@ -120,7 +118,7 @@ public class LoadDataOnStartup implements ApplicationListener<ContextRefreshedEv
             .build());
       }));
 
-    } catch (SpotifyWebApiException | IOException ex) {
+    } catch (Exception ex) {
 
       System.out.println("ERROR: NO POSSIBLE LOAD DATA CREATE DISKS POP SPOTFY SERVICE:" + ex);
 
