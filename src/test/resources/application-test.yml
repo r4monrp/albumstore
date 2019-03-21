@@ -8,7 +8,7 @@ app:
   email: ramon.alves@live.com
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/albumstore?useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/albumstore?createDatabaseIfNotExist=true&useSSL=false
     username: albumstore
     password: '!@12QWqw'
   jpa:
@@ -18,7 +18,7 @@ spring:
   flyway:
     check-location: true
     enabled: true
-    url: jdbc:mysql://127.0.0.1:3306/albumstore?useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/albumstore?createDatabaseIfNotExist=true&useSSL=false
     user: albumstore
     password: '!@12QWqw'
   jackson:

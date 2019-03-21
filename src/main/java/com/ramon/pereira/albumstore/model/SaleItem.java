@@ -28,7 +28,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "sale_items")
+@Table(name = "sale_items", schema = "albumstore")
 public class SaleItem implements Serializable {
 
     @Id

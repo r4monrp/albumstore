@@ -32,7 +32,7 @@ import java.util.List;
 @ToString
 @Builder
 @Entity
-@Table(name = "sales")
+@Table(name = "sales" , schema = "albumstore")
 @NamedEntityGraph(name = "sale.detail", attributeNodes = {
         @NamedAttributeNode("items")})
 public class Sale implements Serializable {

@@ -21,28 +21,29 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "catalog_disks")
+@Table(name = "catalog_disks", schema = "albumstore")
 public class Disc implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-    @Column
-    private String name;
+  @Column
+  private String name;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private enDiscGenre genre;
+  @Column
+  @Enumerated(EnumType.STRING)
+  private enDiscGenre genre;
 
-    @Column
-    private BigDecimal price;
+  @Column
+  private BigDecimal price;
 
 
-    @Column
-    private Date createdAt;
+  @Column
+  private Date createdAt;
 
-    @PrePersist
-    protected void prePersist() { createdAt = new Date();
-    }
+  @PrePersist
+  protected void prePersist() {
+    createdAt = new Date();
+  }
 }

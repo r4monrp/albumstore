@@ -8,9 +8,9 @@ app:
   email: ramon.alves@live.com
 spring:
   datasource:
-    url: ${ALBUMSTORE_DATASOURCE_URL}
-    username: ${ALBUMSTORE_DATASOURCE_USERNAME}
-    password: ${ALBUMSTORE_DATASOURCE_PASSWORD}
+    url: ${ALBUMSTORE_DATASOURCE_URL:jdbc:mysql://127.0.0.1:3306/albumstore?createDatabaseIfNotExist=true&useSSL=false}
+    username: ${ALBUMSTORE_DATASOURCE_USERNAME:albumstore}
+    password: ${ALBUMSTORE_DATASOURCE_PASSWORD:!@12QWqw}
   jpa:
     hibernate.ddl-auto: none
     show-sql: false
@@ -18,17 +18,17 @@ spring:
   flyway:
     check-location: true
     enabled: true
-    url: ${ALBUMSTORE_DATASOURCE_URL}
-    username: ${ALBUMSTORE_DATASOURCE_USERNAME}
-    password: ${ALBUMSTORE_DATASOURCE_PASSWORD}
+    url: ${ALBUMSTORE_DATASOURCE_URL:jdbc:mysql://127.0.0.1:3306/albumstore?createDatabaseIfNotExist=true&useSSL=false}
+    username: ${ALBUMSTORE_DATASOURCE_USERNAME:albumstore}
+    password: ${ALBUMSTORE_DATASOURCE_PASSWORD:!@12QWqw}
   jackson:
     default-property-inclusion: non_null
     serialization:
       fail-on-empty-beans: false
   security:
     user:
-      name: ${ALBUMSTORE_SECURITY_BASIC_NAME}
-      password: ${ALBUMSTORE_SECURITY_BASIC_PASSWORD}
+      name: ${ALBUMSTORE_SECURITY_BASIC_NAME:albumstore}
+      password: ${ALBUMSTORE_SECURITY_BASIC_PASSWORD:albumstore}
 jwt:
   secretKey: ${ALBUMSTORE_SECURITY_JWT_SECRET_KEY:stubJWT}
 spotify:

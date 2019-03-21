@@ -20,7 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "cashback_by_genre_and_day")
+@Table(name = "cashback_by_genre_and_day", schema = "albumstore")
 public class CashbackByGenreAndDay {
 
   @Id

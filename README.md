@@ -33,22 +33,19 @@ https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655
 
 **Banco de Dados:**
 
-**Docker compose:**
-
-Acessar a pasta raiz do projeto e executar(container executando o mysql):
-
-```sh
-https://docs.docker.com/compose/install/
-docker-compose up -d
-```
-
-OU
-
-**Mysql:**
+**Mysql (Opcional ou usar docker compose):**
 ```sh
 https://www.mysql.com/downloads/
-Criar a DB principal utilizada na variavel de ambiente de conexão - albumstore
 ```
+OU
+
+**Executar docker (mysql):**
+
+```sh
+docker-compose up (para acompanhar logs)
+docker-compose up -d (somente executar)
+```
+
 
 **IDEs:**
 ```sh
@@ -75,11 +72,11 @@ Configure as variáveis de ambiente de acordo com o ambiente `src/main/applicati
 | Nome | Descrição | Valor Padrão | Obrigatório |
 | -- | -- | -- | -- |
 | ALBUMSTORE_ENV | Ambiente de execução do projeto| development| |
-| ALBUMSTORE_DATASOURCE_URL | URL JDBC para conectar ao banco de dados |  | :white_check_mark: |
-| ALBUMSTORE_DATASOURCE_USERNAME | Usuário para conectar ao banco de dados | | :white_check_mark: |
-| ALBUMSTORE_DATASOURCE_PASSWORD | Senha para conectar ao banco de dados | | :white_check_mark: |
-| ALBUMSTORE_SECURITY_BASIC_NAME | Usuário para autenticar em rotas BasicAuth | | :white_check_mark: |
-| ALBUMSTORE_SECURITY_BASIC_PASSWORD | senha para autenticar em rotas BasicAuth |  | :white_check_mark:|
+| ALBUMSTORE_DATASOURCE_URL | URL JDBC para conectar ao banco de dados | jdbc:mysql://127.0.0.1:3306/albumstore?createDatabaseIfNotExist=true&useSSL=false  | :white_check_mark: |
+| ALBUMSTORE_DATASOURCE_USERNAME | Usuário para conectar ao banco de dados | albumstore |  |
+| ALBUMSTORE_DATASOURCE_PASSWORD | Senha para conectar ao banco de dados | !@12QWqw |  |
+| ALBUMSTORE_SECURITY_BASIC_NAME | Usuário para autenticar em rotas BasicAuth | albumstore |  |
+| ALBUMSTORE_SECURITY_BASIC_PASSWORD | senha para autenticar em rotas BasicAuth | albumstore  | |
 | ALBUMSTORE_SECURITY_JWT_SECRET_KEY | Secret Key para geração do JWT Token | stubJWT | |
 | ALBUMSTORE_SPOTIFY_CLIENT_ID | Client ID para consumo de APIs do Spotify | | :white_check_mark: |
 | ALBUMSTORE_SPOTIFY_CLIENT_SECRET | Client SECRET para consumo de APIs do Spotify | | :white_check_mark: |
@@ -87,19 +84,10 @@ Configure as variáveis de ambiente de acordo com o ambiente `src/main/applicati
 
 Mantenha o arquivo *src/main/resources/application.yml* , *src/test/resources/application-test.yml* e a tabela de variáveis sempre atualizada.
 
-**Acessando as variáveis:**
 
-```
-  @Value("${spotify.client-id}")
-  private String spotifyClientId;
-```
-
-
-## Configuração para Desenvolvimento
+## Configuração para Execução do projeto
 
 Acessar a pasta raiz do projeto:
-
-
 **Compilar o projeto:**
 
 ```sh
@@ -112,6 +100,8 @@ Acessar a pasta raiz do projeto:
 java -jar target/albumstore-x.x.x.jar
 ```
 
+## Autenticação
+
 **Obtendo um JWT Token para autenticar na API:**
 
 ```sh
@@ -119,7 +109,9 @@ https://jwt.io/
 Gerar conforme JWT_SECRET_KEY
 ```
 
-**Recursos da WEB API**
+##WEB API**
+
+**Recursos disponiveis:**
 
 | Rota | Versão |Descrição | HTTP Method | Autenticação |
 | -- | -- | -- | -- | -- |
@@ -130,3 +122,6 @@ Gerar conforme JWT_SECRET_KEY
 | /albumstore/v1/sales/{id}| v1 | Método para buscar venda pelo seu identificador| GET |  [:white_check_mark:] [OAuth2] |
 | /albumstore/v1/sales| v1 | Método para buscar vendas filtrando por data da venda| GET |  [:white_check_mark:] [OAuth2] |
 | /albumstore/v1/sales| v1 | Método para criar uma nova venda| POST |  [:white_check_mark:] [OAuth2] |
+
+
+
