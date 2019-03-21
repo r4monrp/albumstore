@@ -17,24 +17,9 @@ jobs:
           MYSQL_DATABASE: albumstore
           MYSQL_USER: albumstore
           MYSQL_PASSWORD: '!@12QWqw'
-    steps: # a collection of executable commands
-      - checkout # check out source code to working directory
-
-        - restore_cache: # restore the saved cache after the first run or if `pom.xml` has changed
-            key: albumstore-{{ checksum "pom.xml" }}
-
-        - run: mvn -s settings.xml dependency:go-offline # gets the project dependencies
-
-        - save_cache: # saves the project dependencies
-            paths:
-              - ~/.m2
-            key: albumstore-{{ checksum "pom.xml" }}
-
-        #- run: mvn -s settings.xml -q test verify coveralls:report -DrepoToken=$COVERALLS_REPO_TOKEN package # run the actual tests
-      - run: mvn -s settings.xml -q test verify package
-
-      - store_test_results: # uploads the test metadata from the `target/surefire-reports` directory so that it can show up in the CircleCI dashboard.
-          path: target/surefire-reports
+    steps:
+      - run:
+          command: mvn clean install
 
       - store_artifacts: # store the uberjar as an artifact
           path: target/albumstore*.jar
