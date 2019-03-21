@@ -31,7 +31,7 @@ OU
 https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html
 ```
 
-##Banco de Dados
+## Banco de Dados
 
 **Mysql (Opcional ou usar docker compose):**
 ```sh
@@ -47,20 +47,20 @@ docker-compose up -d (somente executar)
 ```
 
 
-##IDEs:
+## IDEs:
 ```sh
 Intellij: https://www.jetbrains.com/idea/download
 Eclipse : https://www.eclipse.org/downloads/
 ```
 
-##Lombok plugin:
+## Lombok plugin:
 
 ```sh
 Intellij: https://projectlombok.org/setup/intellij
 Eclipse : https://projectlombok.org/setup/eclipse
 ```
 
-##Obtendo Client ID e SECRET Spotify:
+## Obtendo Client ID e SECRET Spotify:
 
 ```sh
 https://developer.spotify.com/dashboard
@@ -110,7 +110,7 @@ https://jwt.io/
 Gerar conforme JWT_SECRET_KEY
 ```
 
-##WEB API
+## WEB API
 
 **Recursos disponiveis:**
 
