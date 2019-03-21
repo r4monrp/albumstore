@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,21 @@ public class DiscCatalogController {
 
   @Autowired
   private DiscMapper discMapper;
+
+  @GetMapping("/supplyDiskCatalog")
+  @ResponseBody
+  @ApiOperation(value = "Supply Disk Catalog By Spotify Service", response = HttpStatus.class, produces = "application/json")
+  @ApiResponses(value = {
+      @ApiResponse(code = 200, message = "Success"),
+      @ApiResponse(code = 400, message = "Bad Request"),
+      @ApiResponse(code = 404, message = "Not Found"),
+      @ApiResponse(code = 500, message = "Internal Server Error")})
+  public HttpStatus supplyDiskCatalog() {
+
+    discCatalogBusiness.supplyDiskCatalog();
+
+    return HttpStatus.OK;
+  }
 
   @GetMapping("/{id}")
   @ResponseBody
@@ -52,12 +68,13 @@ public class DiscCatalogController {
   @ApiOperation(value = "Filter Albuns By Genre", response = DiscResponseDto.class, produces = "application/json")
   @ApiResponses(value = {
       @ApiResponse(code = 200, message = "Success"),
+      @ApiResponse(code = 201, message = "Created"),
       @ApiResponse(code = 400, message = "Bad Request"),
       @ApiResponse(code = 404, message = "Not Found"),
       @ApiResponse(code = 500, message = "Internal Server Error")})
   public Optional<List<DiscResponseDto>> findByGenreOrderByNameAsc(@RequestParam final enDiscGenre genre,
-                                                        @RequestParam(value = "page", defaultValue = "0") final int page,
-                                                        @RequestParam(value = "pagesize", defaultValue = "10") final int pagesize) {
+                                                                   @RequestParam(value = "page", defaultValue = "0") final int page,
+                                                                   @RequestParam(value = "pagesize", defaultValue = "10") final int pagesize) {
 
     return discMapper.serializeListToDto(discCatalogBusiness.findByGenreOrderByNameAsc(genre, PageRequest.of(page, pagesize)));
   }
