@@ -72,7 +72,7 @@ Configure as variáveis de ambiente de acordo com o ambiente `src/main/applicati
 | Nome | Descrição | Valor Padrão | Obrigatório |
 | -- | -- | -- | -- |
 | ALBUMSTORE_ENV | Ambiente de execução do projeto| development| Caso default não atenda |
-| ALBUMSTORE_DATASOURCE_URL | URL JDBC para conectar ao banco de dados | jdbc:mysql://127.0.0.1:3306/albumstore?createDatabaseIfNotExist=true&useSSL=false  | Caso default não atenda |
+| ALBUMSTORE_DATASOURCE_URL | URL JDBC para conectar ao banco de dados | jdbc:mysql://127.0.0.1:3306/albumstore?createDatabaseIfNotExist=true&useSSL=false&useTimezone=true&serverTimezone=UTC  | Caso default não atenda |
 | ALBUMSTORE_DATASOURCE_USERNAME | Usuário para conectar ao banco de dados | albumstore | Caso default não atenda |
 | ALBUMSTORE_DATASOURCE_PASSWORD | Senha para conectar ao banco de dados | !@12QWqw | Caso default não atenda |
 | ALBUMSTORE_SECURITY_BASIC_NAME | Usuário para autenticar em rotas BasicAuth | albumstore | Caso default não atenda |
