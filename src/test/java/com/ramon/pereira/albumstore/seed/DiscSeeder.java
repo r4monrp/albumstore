@@ -6,9 +6,11 @@ import com.ramon.pereira.albumstore.model.enDiscGenre;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import lombok.NonNull;
+
 public class DiscSeeder extends SeederGeneric {
 
-    public static Disc disc(Integer id) {
+    public static Disc disc(@NonNull final Integer id) {
         return Disc.builder()
                 .id(id)
                 .genre(enDiscGenre.ROCK)
