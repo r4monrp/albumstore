@@ -1,6 +1,8 @@
 package com.ramon.pereira.albumstore.business.impl;
 
 import com.ramon.pereira.albumstore.business.SalesBusiness;
+import com.ramon.pereira.albumstore.exception.IncorrectItemTotalValueException;
+import com.ramon.pereira.albumstore.exception.IncorrectTotalValueException;
 import com.ramon.pereira.albumstore.exception.SaleNotFoundException;
 import com.ramon.pereira.albumstore.model.CashbackByGenreAndDay;
 import com.ramon.pereira.albumstore.model.Sale;
@@ -24,62 +26,78 @@ import org.springframework.stereotype.Service;
 @Service
 public class SalesBusinessImpl implements SalesBusiness {
 
-  @Autowired
-  private SalesRepository salesRepository;
+    @Autowired
+    private SalesRepository salesRepository;
 
-  @Autowired
-  private CashbackByGenreAndDayRepository cashbackByGenreAndDayRepository;
+    @Autowired
+    private CashbackByGenreAndDayRepository cashbackByGenreAndDayRepository;
 
-  @Override
-  public Optional<List<Sale>> findByCreatedAtBetweenOrderByCreatedAtDesc(@NonNull final Date startDate,
-                                                                         @NonNull final Date endDate,
-                                                                         @NonNull final Pageable pageable) {
+    @Override
+    public Optional<List<Sale>> findByCreatedAtBetweenOrderByCreatedAtDesc(@NonNull final Date startDate,
+                                                                           @NonNull final Date endDate,
+                                                                           @NonNull final Pageable pageable) {
 
-    return salesRepository.findByCreatedAtBetweenOrderByCreatedAtDesc(startDate, endDate, pageable);
+        return salesRepository.findByCreatedAtBetweenOrderByCreatedAtDesc(startDate, endDate, pageable);
 
-  }
+    }
 
-  @Override
-  public Optional<Sale> findById(@NonNull final Integer id) {
-    return Optional.of(salesRepository.findById(id).orElseThrow(SaleNotFoundException::new));
-  }
+    @Override
+    public Optional<Sale> findById(@NonNull final Integer id) {
+        return Optional.of(salesRepository.findById(id).orElseThrow(SaleNotFoundException::new));
+    }
 
-  @Override
-  public Optional<Sale> create(@NonNull final Sale sale) {
+    @Override
+    public Optional<Sale> create(@NonNull final Sale sale) {
 
-    Optional.of(sale.getItems())
-        .ifPresent(v -> v.forEach(e -> {
-          e.setCashBackValue(processCashBackValue(e));
-          e.setSale(sale);
-        }));
+        Optional.of(sale.getItems())
+                .ifPresent(v -> v.forEach(e -> {
+                    valideItemTotalValue(e.getQuantity(), e.getPrice(), e.getTotalPrice());
+                    e.setCashBackValue(processCashBackValue(e));
+                    e.setSale(sale);
+                }));
 
-    sale.setCashBackTotalValue(calculeTotalCashbackFromSaleBySaleItems(sale.getItems()));
+        valideTotalValueSale(sale.getItems(), sale.getTotalPrice());
+        sale.setCashBackTotalValue(calculeTotalCashbackFromSaleBySaleItems(sale.getItems()));
 
-    return Optional.of(salesRepository.saveAndFlush(sale));
-  }
+        return Optional.of(salesRepository.saveAndFlush(sale));
+    }
 
+    protected void valideItemTotalValue(@NonNull final Integer quantity, @NonNull final BigDecimal price,
+                                        @NonNull final BigDecimal total) {
 
-  protected BigDecimal calculeTotalCashbackFromSaleBySaleItems(@NonNull final List<SaleItem> saleItems) {
-    return saleItems.stream()
-        .map(SaleItem::getCashBackValue)
-        .reduce(BigDecimal.ZERO, BigDecimal::add);
-  }
+        if (total.multiply(new BigDecimal(quantity)).compareTo(price) != 0)
+            throw new IncorrectItemTotalValueException();
+    }
 
-  protected BigDecimal processCashBackValue(@NonNull final SaleItem saleItem) {
-    return calculeTotalCashbackPerItem(saleItem.getTotalPrice(),
-        getCashbackByGenreAndDay(saleItem.getGenre(), enDay.valueOf(ZonedDateTime.now().getDayOfWeek().toString())));
-  }
-
-  protected BigDecimal calculeTotalCashbackPerItem(@NonNull final BigDecimal totalItemPrice,
-                                                   @NonNull final BigDecimal cashbackPercent) {
-
-    return totalItemPrice.divide(new BigDecimal(100)).multiply(cashbackPercent);
-  }
+    protected void valideTotalValueSale(@NonNull final List<SaleItem> saleItems, @NonNull final BigDecimal totalValue) {
+        if (totalValue.compareTo(saleItems.stream().map(SaleItem::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)) != 0) {
+            throw new IncorrectTotalValueException();
+        }
+    }
 
 
-  protected BigDecimal getCashbackByGenreAndDay(@NonNull final enDiscGenre enDiscGenre, @NonNull final enDay enDay) {
-    return cashbackByGenreAndDayRepository.findByGenreAndDay(enDiscGenre, enDay)
-        .map(CashbackByGenreAndDay::getPercentCashBack)
-        .orElse(BigDecimal.ZERO);
-  }
+    protected BigDecimal calculeTotalCashbackFromSaleBySaleItems(@NonNull final List<SaleItem> saleItems) {
+        return saleItems.stream()
+                .map(SaleItem::getCashBackValue)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    protected BigDecimal processCashBackValue(@NonNull final SaleItem saleItem) {
+        return calculeTotalCashbackPerItem(saleItem.getTotalPrice(),
+                getCashbackByGenreAndDay(saleItem.getGenre(), enDay.valueOf(ZonedDateTime.now().getDayOfWeek().toString())));
+    }
+
+    protected BigDecimal calculeTotalCashbackPerItem(@NonNull final BigDecimal totalItemPrice,
+                                                     @NonNull final BigDecimal cashbackPercent) {
+
+        return totalItemPrice.divide(new BigDecimal(100)).multiply(cashbackPercent);
+    }
+
+
+    protected BigDecimal getCashbackByGenreAndDay(@NonNull final enDiscGenre enDiscGenre, @NonNull final enDay enDay) {
+        return cashbackByGenreAndDayRepository.findByGenreAndDay(enDiscGenre, enDay)
+                .map(CashbackByGenreAndDay::getPercentCashBack)
+                .orElse(BigDecimal.ZERO);
+    }
 }

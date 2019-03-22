@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,10 +27,12 @@ public class SaleRequestDto {
 
   @Valid
   @NotNull
+  @Email
   private String customerEmail;
 
   @Valid
   @NotNull
+  @Size(min=11,max = 11)
   private Long customerCpf;
 
   @Valid
