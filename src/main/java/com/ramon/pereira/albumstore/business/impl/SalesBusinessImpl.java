@@ -65,7 +65,7 @@ public class SalesBusinessImpl implements SalesBusiness {
     protected void valideItemTotalValue(@NonNull final Integer quantity, @NonNull final BigDecimal price,
                                         @NonNull final BigDecimal total) {
 
-        if (total.multiply(new BigDecimal(quantity)).compareTo(price) != 0)
+        if (price.multiply(new BigDecimal(quantity)).compareTo(total) != 0)
             throw new IncorrectItemTotalValueException();
     }
 
