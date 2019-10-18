@@ -1,5 +1,5 @@
 # Albumstore
-Web Api Albuns Store
+Web Api Albuns Store -  Venda de Albuns
 
 > Albumstore é uma API para gerenciar discos e vendas com cashback
 
